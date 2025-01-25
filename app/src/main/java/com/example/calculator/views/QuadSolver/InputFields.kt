@@ -42,7 +42,7 @@ fun InputFields(modifier:Modifier=Modifier,valueArray:Array<MutableState<String>
 
 @Composable
 fun InputRow(modifier:Modifier=Modifier,label:String,value: String ,onValueChange:(String)->Unit,keyboardOptions: KeyboardOptions){
-    Row(modifier){
+    Row(modifier=modifier){
         Text(
             text = "$label : ",
             textAlign = TextAlign.Center,

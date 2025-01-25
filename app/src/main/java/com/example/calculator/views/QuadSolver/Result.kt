@@ -3,9 +3,11 @@ package com.example.calculator.views.QuadSolver
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import java.text.DecimalFormat
 import kotlin.math.sqrt
 
@@ -26,7 +28,7 @@ fun ResultValues(modifier:Modifier=Modifier,valueOfA: Double, valueOfB:Double, v
 
 @Composable
 fun TextRow(label:String,answer:String){
-    Row {
+    Row (modifier=Modifier.padding(10.dp)){
         Text(
             text = label
         )
@@ -58,7 +60,7 @@ fun calculateResult(valueOfA:Double, valueOfB:Double, valueOfC:Double):Pair<Stri
             val b= sqrt(4*valueOfA*valueOfC - valueOfB*valueOfB)/(2*valueOfA)
             val x1= df.format(a)
             val x2 = df.format(b)
-            return Pair("${x1}+${x2}i","${x1}-${x2}i")
+            return Pair("$x1 + ${x2}i","$x1 - ${x2}i")
 
         }
     }catch (e:Exception) {
