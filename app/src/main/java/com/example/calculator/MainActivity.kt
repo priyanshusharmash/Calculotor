@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.calculator.ui.theme.CalculatorTheme
 import com.example.calculator.views.Calculator.ArithmeticCalculator
+import com.example.calculator.views.QuadSolver.QuadSolverPage
 
 private const val TAG = "Main Activity"
 class MainActivity : ComponentActivity() {
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CalculatorTheme {
                Surface {
-                  ArithmeticCalculator()
+                    QuadSolverPage()
                }
             }
         }
