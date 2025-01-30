@@ -11,11 +11,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.calculator.ui.theme.CalculatorTheme
+import com.example.calculator.views.MainPage
 import com.example.calculator.views.QuadSolver.QuadSolverPage
 
 private const val TAG = "Main Activity"
 class MainActivity : ComponentActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +24,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CalculatorTheme {
                Surface {
-                   Scaffold(
-                       content={
-                           QuadSolverPage(
-                               modifier=Modifier.padding(it)
-                           )
-                       }
-                   )
-
+                   MainPage()
                }
             }
         }
