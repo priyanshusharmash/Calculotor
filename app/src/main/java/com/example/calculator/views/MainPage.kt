@@ -1,6 +1,7 @@
 package com.example.calculator.views
 
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,14 +21,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.example.calculator.views.Calculator.ArithmeticCalculator
 import com.example.calculator.views.QuadSolver.QuadSolverPage
+import com.example.calculator.views.bmiCalculator.BMICalculatorPage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainPage(){
     val coroutineScope= rememberCoroutineScope()
-    val pagerState= rememberPagerState(pageCount = { Tabs.entries.size})
-    val selectedTabIndex by remember { mutableStateOf(0) }
+    val pagerState= rememberPagerState(pageCount = { Tabs.entries.size}, initialPage = Tabs.Calculator.index)
     Scaffold (
 
     ){innerPadding->
@@ -35,7 +36,7 @@ fun MainPage(){
             .padding(innerPadding)
             .fillMaxSize())
         {
-            TabsRow(pagerState,coroutineScope,selectedTabIndex)
+            TabsRow(pagerState,coroutineScope)
             Horizontal_Pager(pagerState)
         }
     }
@@ -44,7 +45,7 @@ fun MainPage(){
 
 
 @Composable
-fun TabsRow(pagerState: PagerState,coroutineScope:CoroutineScope,selectedTabIndex:Int){
+fun TabsRow(pagerState: PagerState,coroutineScope:CoroutineScope){
     TabRow(
         selectedTabIndex = pagerState.currentPage,
         modifier = Modifier.fillMaxWidth()
@@ -66,10 +67,8 @@ fun Horizontal_Pager(pagerState: PagerState){
         state = pagerState,
         userScrollEnabled = true,
     ) { page->
-        when(page){
-            0 -> ArithmeticCalculator()
-            1 -> QuadSolverPage()
-        }
+        val myEnum = Tabs.entries.find { it.index == page }
+        myEnum?.composableFunction?.let { it() }
     }
 }
 

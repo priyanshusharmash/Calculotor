@@ -13,53 +13,24 @@ import androidx.compose.ui.Modifier
 import com.example.calculator.ui.theme.CalculatorTheme
 import com.example.calculator.views.MainPage
 import com.example.calculator.views.QuadSolver.QuadSolverPage
+import com.example.calculator.views.bmiCalculator.BMICalculatorPage
 
-private const val TAG = "Main Activity"
+
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        Log.d(TAG,"onCreate called")
         setContent {
             CalculatorTheme {
                Surface {
-                   MainPage()
+                  MainPage()
+
                }
             }
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG,"onStart called")
-    }
-
-    override fun onResume(){
-        super.onResume()
-        Log.d(TAG,"onResume called")
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG,"onPause called")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG,"onStop called")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.d(TAG,"onRestart called")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG,"onDestroy called")
-    }
 }
 
 
