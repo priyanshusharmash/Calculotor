@@ -1,7 +1,8 @@
-package com.example.calculator.views.Calculator
+package com.example.calculator.views.calculator
 
 
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -9,20 +10,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import net.objecthunter.exp4j.ExpressionBuilder
 import java.math.BigDecimal
-
+import java.text.DecimalFormat
 
 
 @Composable
@@ -33,6 +34,7 @@ fun ArithmeticCalculator(){
 
     BoxWithConstraints(modifier=Modifier.fillMaxSize()) {
         val maxHeight=maxHeight
+        val maxWidth = maxWidth
         Column(
             verticalArrangement = Arrangement.Bottom,
             modifier = Modifier
@@ -40,30 +42,27 @@ fun ArithmeticCalculator(){
         ){
 
             ExpressionInputField(
-
-                modifier = Modifier
-                    ,
                 expression = expression.value,
-
                 style = TextStyle(
                     fontSize =  MaterialTheme.typography.displayLarge.fontSize,
                     textAlign = TextAlign.End
                 ),
                 onTextChange = { newExpression->
                     expression.value=newExpression
-                }
+                },
+                modifier = Modifier.weight(1F)
+                    .width(maxWidth)
             )
 
 
             AnswerField(
                 modifier=Modifier.fillMaxWidth()
+                    .padding(2.dp)
                     .height(maxHeight*0.1F)
-
-                    .wrapContentHeight(Alignment.CenterVertically)
-                    .padding(10.dp),
+                    .border(width = 1.dp,shape= RoundedCornerShape(5.dp), color = MaterialTheme.colorScheme.primary),
 
                 answer = answer.value,
-                style = MaterialTheme.typography.displaySmall
+                style = MaterialTheme.typography.displayMedium
             )
 
             Grid(modifier = Modifier.height(maxHeight*0.60F)){ buttonPressed->
@@ -82,7 +81,7 @@ fun ArithmeticCalculator(){
 }
 
 
-fun buttonDecision(buttonClicked:String, expression:MutableState<String>, result:MutableState<String>,previousAns:MutableState<String>){
+private fun buttonDecision(buttonClicked:String, expression:MutableState<String>, result:MutableState<String>,previousAns:MutableState<String>){
     when(buttonClicked){
         "=" ->
         {
@@ -100,10 +99,12 @@ fun buttonDecision(buttonClicked:String, expression:MutableState<String>, result
     }
 }
 
-fun calculateAnswer(expression:String,result:(String)->Unit){
+private fun calculateAnswer(expression:String,result:(String)->Unit){
     try {
-        val Result = ExpressionBuilder(expression).build().evaluate()
-        val answerStr=BigDecimal(Result).stripTrailingZeros().toPlainString()
+        val calculatedResult = ExpressionBuilder(expression).build().evaluate()
+        val decimalFormat = DecimalFormat("##.###")
+        val formatedResult = decimalFormat.format(calculatedResult)
+        val answerStr=BigDecimal(formatedResult).stripTrailingZeros().toPlainString()
 
         result(if(answerStr.contains('.') && answerStr.substringAfter('.').all { it =='0' }) answerStr.toInt().toString() else answerStr)
     }catch (e:Exception){

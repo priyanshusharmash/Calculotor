@@ -1,7 +1,6 @@
 package com.example.calculator.views
 
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,14 +13,8 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.example.calculator.views.Calculator.ArithmeticCalculator
-import com.example.calculator.views.QuadSolver.QuadSolverPage
-import com.example.calculator.views.bmiCalculator.BMICalculatorPage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

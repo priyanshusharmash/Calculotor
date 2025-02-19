@@ -14,8 +14,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.internal.composableLambda
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,6 +25,7 @@ import com.example.calculator.ui.theme.CalculatorTheme
 import com.example.calculator.views.MainPage
 import com.example.calculator.views.QuadSolver.QuadSolverPage
 import com.example.calculator.views.bmiCalculator.BMICalculatorPage
+import kotlinx.coroutines.Delay
 import kotlinx.coroutines.delay
 
 
@@ -34,9 +37,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             CalculatorTheme {
                Surface {
-                   if(Build.VERSION.SDK_INT<31) SplashController()
-                   else{
-                      MainPage()
+                   var isSplashScreen by rememberSaveable { mutableStateOf(true) }
+                   if(Build.VERSION.SDK_INT<31) {
+                       if(isSplashScreen){
+                           SplashScreen()
+                           LaunchedEffect(Unit) {
+                               delay(1000)
+                               isSplashScreen=false
+                           }
+                       }else{
+                           MainPage()
+                       }
+                   }else{
+                       MainPage()
                    }
                }
             }
@@ -44,22 +57,6 @@ class MainActivity : ComponentActivity() {
     }
 
 }
-
-
-@Composable
-fun SplashController(){
-    var isSplashVisible by remember { mutableStateOf(true) }
-    if(isSplashVisible){
-        SplashScreen()
-        LaunchedEffect (Unit){
-            delay(1000)
-            isSplashVisible=false
-        }
-    }else{
-            MainPage()
-    }
-}
-
 
 
 

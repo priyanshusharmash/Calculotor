@@ -1,7 +1,7 @@
 package com.example.calculator.views
 
 import androidx.compose.runtime.Composable
-import com.example.calculator.views.Calculator.ArithmeticCalculator
+import com.example.calculator.views.calculator.ArithmeticCalculator
 import com.example.calculator.views.QuadSolver.QuadSolverPage
 import com.example.calculator.views.bmiCalculator.BMICalculatorPage
 
